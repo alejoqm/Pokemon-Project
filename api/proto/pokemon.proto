@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pokemon;
+
+option go_package = "github.com/yourusername/strava-project/internal/rpc";
+
+service PokemonService {
+  rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse);
+}
+
+message GetPokemonRequest {
+  string name = 1;
+}
+
+message GetPokemonResponse {
+  string name = 1;
+  int32 id = 2;
+  repeated string types = 3;
+}
