@@ -16,4 +16,20 @@ message GetPokemonResponse {
   string name = 1;
   int32 id = 2;
   repeated string types = 3;
+  Sprites sprites = 4;
+  DamageRelations damageRelations = 5;
+}
+
+message Sprites {
+  string frontDefault = 1;
+  string backDefault = 2;
+}
+
+message DamageRelations {
+  repeated string noDamageTo = 1;
+  repeated string halfDamageTo = 2;
+  repeated string doubleDamageTo = 3;
+  repeated string noDamageFrom = 4;
+  repeated string halfDamageFrom = 5;
+  repeated string doubleDamageFrom = 6;
 }

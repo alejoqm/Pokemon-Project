@@ -2,7 +2,6 @@ package service
 
 import (
     "context"
-    "fmt"
     "log"
     "stava/batch/internal/client"
 )
@@ -13,7 +12,22 @@ type PokemonDetails struct {
     Height int
     Weight int
     Types []string
+    DamageRelations DamageRelations
+    Sprites Sprites
+}
+
+type DamageRelations struct {
     NoDamageTo []string
+    HalfDamageTo []string
+    DoubleDamageTo []string
+    NoDamageFrom []string
+    HalfDamageFrom []string
+    DoubleDamageFrom []string
+}
+
+type Sprites struct {
+    FrontDefault string
+    BackDefault string
 }
 
 type PokemonService struct {
@@ -39,6 +53,10 @@ func (s *PokemonService) GetPokemonInfo(ctx context.Context, pokemonName string)
         Height: response.Height,
         Weight: response.Weight,
         Types:  make([]string, 0, len(response.Types)),
+        Sprites: Sprites{
+            FrontDefault: response.Sprites.FrontDefault,
+            BackDefault: response.Sprites.BackDefault,
+        },
     }
     
     
@@ -53,9 +71,56 @@ func (s *PokemonService) GetPokemonInfo(ctx context.Context, pokemonName string)
             log.Fatal(err)
         }
         
-        fmt.Println(dataType)
+        pokemonDetails.DamageRelations.NoDamageTo = append(pokemonDetails.DamageRelations.NoDamageTo, 
+                                           extractTypes(dataType.DamageRelations.NoDamageTo)...)
+        pokemonDetails.DamageRelations.NoDamageTo = dedupe(pokemonDetails.DamageRelations.NoDamageTo)
+        
+        
+        pokemonDetails.DamageRelations.HalfDamageTo = append(pokemonDetails.DamageRelations.HalfDamageTo, 
+                                           extractTypes(dataType.DamageRelations.HalfDamageTo)...)
+        pokemonDetails.DamageRelations.HalfDamageTo = dedupe(pokemonDetails.DamageRelations.HalfDamageTo)
+        
+        
+        pokemonDetails.DamageRelations.DoubleDamageTo = append(pokemonDetails.DamageRelations.DoubleDamageTo, 
+                                           extractTypes(dataType.DamageRelations.DoubleDamageTo)...)
+        pokemonDetails.DamageRelations.DoubleDamageTo = dedupe(pokemonDetails.DamageRelations.DoubleDamageTo)
+        
+        
+        pokemonDetails.DamageRelations.NoDamageFrom = append(pokemonDetails.DamageRelations.NoDamageFrom, 
+                                           extractTypes(dataType.DamageRelations.NoDamageFrom)...)
+        pokemonDetails.DamageRelations.NoDamageFrom = dedupe(pokemonDetails.DamageRelations.NoDamageFrom)
+        
+        
+        pokemonDetails.DamageRelations.HalfDamageFrom = append(pokemonDetails.DamageRelations.HalfDamageFrom, 
+                                           extractTypes(dataType.DamageRelations.HalfDamageFrom)...)
+        pokemonDetails.DamageRelations.HalfDamageFrom = dedupe(pokemonDetails.DamageRelations.HalfDamageFrom)
+        
+        pokemonDetails.DamageRelations.DoubleDamageFrom = append(pokemonDetails.DamageRelations.DoubleDamageFrom, 
+                                           extractTypes(dataType.DamageRelations.DoubleDamageFrom)...)
+        pokemonDetails.DamageRelations.DoubleDamageFrom = dedupe(pokemonDetails.DamageRelations.DoubleDamageFrom)
         
     }
     
     return pokemonDetails, nil;
+}
+
+func extractTypes(items []struct{ Name string `json:"name"` }) []string {
+	out := make([]string, 0, len(items))
+	for _, item := range items {
+		out = append(out, item.Name)
+	}
+	return out
+}
+
+func dedupe(in []string) []string {
+	seen := make(map[string]struct{}, len(in))
+	out := in[:0]
+	for _, v := range in {
+		if _, ok := seen[v]; ok {
+			continue
+		}
+		seen[v] = struct{}{}
+		out = append(out, v)
+	}
+	return out
 }

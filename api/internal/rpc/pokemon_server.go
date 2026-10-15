@@ -27,6 +27,17 @@ func (s *PokemonServer) GetPokemon(ctx context.Context, req *GetPokemonRequest) 
         Name:  pokemon.Name,
         Id:    int32(pokemon.ID),
         Types: pokemon.Types,
-        // Map other fields
+        Sprites: &Sprites{
+            FrontDefault: pokemon.Sprites.FrontDefault,
+            BackDefault: pokemon.Sprites.BackDefault,
+        },
+        DamageRelations: &DamageRelations{
+            NoDamageTo:  pokemon.DamageRelations.NoDamageTo,
+            HalfDamageTo:  pokemon.DamageRelations.HalfDamageTo,
+            DoubleDamageTo:  pokemon.DamageRelations.DoubleDamageTo,
+            NoDamageFrom:  pokemon.DamageRelations.NoDamageFrom,
+            HalfDamageFrom:  pokemon.DamageRelations.HalfDamageFrom,
+            DoubleDamageFrom:  pokemon.DamageRelations.DoubleDamageFrom,
+        },
     }, nil
 }
