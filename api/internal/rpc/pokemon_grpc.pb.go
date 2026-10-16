@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PokemonService_GetPokemon_FullMethodName = "/pokemon.PokemonService/GetPokemon"
+	PokemonService_GetPokemon_FullMethodName        = "/pokemon.PokemonService/GetPokemon"
+	PokemonService_GetPokemonsByType_FullMethodName = "/pokemon.PokemonService/GetPokemonsByType"
 )
 
 // PokemonServiceClient is the client API for PokemonService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PokemonServiceClient interface {
 	GetPokemon(ctx context.Context, in *GetPokemonRequest, opts ...grpc.CallOption) (*GetPokemonResponse, error)
+	GetPokemonsByType(ctx context.Context, in *GetPokemonsByTypeRequest, opts ...grpc.CallOption) (*GetPokemonsByTypeResponse, error)
 }
 
 type pokemonServiceClient struct {
@@ -47,11 +49,22 @@ func (c *pokemonServiceClient) GetPokemon(ctx context.Context, in *GetPokemonReq
 	return out, nil
 }
 
+func (c *pokemonServiceClient) GetPokemonsByType(ctx context.Context, in *GetPokemonsByTypeRequest, opts ...grpc.CallOption) (*GetPokemonsByTypeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPokemonsByTypeResponse)
+	err := c.cc.Invoke(ctx, PokemonService_GetPokemonsByType_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PokemonServiceServer is the server API for PokemonService service.
 // All implementations must embed UnimplementedPokemonServiceServer
 // for forward compatibility.
 type PokemonServiceServer interface {
 	GetPokemon(context.Context, *GetPokemonRequest) (*GetPokemonResponse, error)
+	GetPokemonsByType(context.Context, *GetPokemonsByTypeRequest) (*GetPokemonsByTypeResponse, error)
 	mustEmbedUnimplementedPokemonServiceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedPokemonServiceServer struct{}
 
 func (UnimplementedPokemonServiceServer) GetPokemon(context.Context, *GetPokemonRequest) (*GetPokemonResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetPokemon not implemented")
+}
+func (UnimplementedPokemonServiceServer) GetPokemonsByType(context.Context, *GetPokemonsByTypeRequest) (*GetPokemonsByTypeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetPokemonsByType not implemented")
 }
 func (UnimplementedPokemonServiceServer) mustEmbedUnimplementedPokemonServiceServer() {}
 func (UnimplementedPokemonServiceServer) testEmbeddedByValue()                        {}
@@ -104,6 +120,24 @@ func _PokemonService_GetPokemon_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PokemonService_GetPokemonsByType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPokemonsByTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PokemonServiceServer).GetPokemonsByType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PokemonService_GetPokemonsByType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PokemonServiceServer).GetPokemonsByType(ctx, req.(*GetPokemonsByTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PokemonService_ServiceDesc is the grpc.ServiceDesc for PokemonService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var PokemonService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPokemon",
 			Handler:    _PokemonService_GetPokemon_Handler,
+		},
+		{
+			MethodName: "GetPokemonsByType",
+			Handler:    _PokemonService_GetPokemonsByType_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

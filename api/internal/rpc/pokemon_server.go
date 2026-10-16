@@ -41,3 +41,22 @@ func (s *PokemonServer) GetPokemon(ctx context.Context, req *GetPokemonRequest) 
         },
     }, nil
 }
+
+func (s *PokemonServer) GetPokemonsByType(ctx context.Context, req *GetPokemonsByTypeRequest) (*GetPokemonsByTypeResponse, error) {
+    dto, err := s.pokemonSvc.GetPokemonsByType(ctx, req.Type, int(req.Total))
+    if err != nil {
+        return nil, err
+    }
+
+    pokemons := make([]*PokemonSummary, len(dto))
+    for i, p := range dto {
+        pokemons[i] = &PokemonSummary{
+            Name: p.Name,
+            // Add sprites if needed
+        }
+    }
+
+    return &GetPokemonsByTypeResponse{
+        Pokemons: pokemons,
+    }, nil
+}

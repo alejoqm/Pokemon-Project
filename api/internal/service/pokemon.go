@@ -3,8 +3,14 @@ package service
 import (
     "context"
     "log"
+    "fmt"
+    "errors"
     "stava/batch/internal/client"
 )
+
+type PokemonBaseInfo struct {
+    Name string;
+}
 
 type PokemonDetails struct {
     ID int
@@ -42,6 +48,10 @@ func NewPokemonService(client *client.ServiceClient) *PokemonService {
 
 func (s *PokemonService) GetPokemonInfo(ctx context.Context, pokemonName string) (PokemonDetails, error) {
     response, err := s.client.GetPokemonInfo(ctx, pokemonName)
+    
+    if pokemonName == "" {
+		return PokemonDetails{}, errors.New("pokemonName must not be empty")
+	}
     
     if (err != nil) {
         return PokemonDetails{}, err
@@ -102,6 +112,31 @@ func (s *PokemonService) GetPokemonInfo(ctx context.Context, pokemonName string)
     }
     
     return pokemonDetails, nil;
+}
+
+func (s *PokemonService) GetPokemonsByType(ctx context.Context, pokemonType string, total int) ([]PokemonBaseInfo, error) {
+
+    if pokemonType == "" {
+		return nil, errors.New("pokemonType must not be empty")
+	}
+    
+    response, err := s.client.GetTypeInfo(ctx, pokemonType)
+    
+    if (err != nil) {
+        return nil, err
+    }
+    
+    results := make([]PokemonBaseInfo, 0, min(total, len(response.Pokemon)))
+    
+    limit := min(int(total), len(response.Pokemon))
+	for i := 0; i < limit; i++ {
+		p := response.Pokemon[i]
+		results = append(results, PokemonBaseInfo{
+			Name: p.Pokemon.Name,
+		})
+	}
+    fmt.Print(results)
+    return results,  nil
 }
 
 func extractTypes(items []struct{ Name string `json:"name"` }) []string {

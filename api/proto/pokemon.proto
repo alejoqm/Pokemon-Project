@@ -6,6 +6,8 @@ option go_package = "github.com/yourusername/strava-project/internal/rpc";
 
 service PokemonService {
   rpc GetPokemon(GetPokemonRequest) returns (GetPokemonResponse);
+  
+  rpc GetPokemonsByType(GetPokemonsByTypeRequest) returns (GetPokemonsByTypeResponse);
 }
 
 message GetPokemonRequest {
@@ -18,6 +20,23 @@ message GetPokemonResponse {
   repeated string types = 3;
   Sprites sprites = 4;
   DamageRelations damageRelations = 5;
+}
+
+message GetPokemonsByTypeRequest {
+  string type = 1;          // e.g., "electric", "ground"
+  int32 total = 2;          // max Pokémon to return
+  bool random = 3;          // true = random sample, false = ordered by ID
+}
+
+message PokemonSummary {
+  int32 id = 1;             // unique identifier
+  string name = 2;
+  Sprites sprites = 3;
+  repeated string types = 4; // in case of dual-types
+}
+
+message GetPokemonsByTypeResponse {
+  repeated PokemonSummary pokemons = 1; 
 }
 
 message Sprites {

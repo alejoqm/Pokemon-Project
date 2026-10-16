@@ -80,6 +80,49 @@ Sample response:
 }
 ```
 
+```
+grpcurl -plaintext -d '{"name": "ground"}' localhost:50051 pokemon.GetPokemonsByType
+```
+Sample response:
+
+```
+{
+    "pokemons": [
+        {
+            "types": [],
+            "id": 0,
+            "name": "sandshrew",
+            "sprites": null
+        },
+        {
+            "types": [],
+            "id": 0,
+            "name": "sandslash",
+            "sprites": null
+        },
+        {
+            "types": [],
+            "id": 0,
+            "name": "nidoqueen",
+            "sprites": null
+        },
+        {
+            "types": [],
+            "id": 0,
+            "name": "nidoking",
+            "sprites": null
+        },
+        {
+            "types": [],
+            "id": 0,
+            "name": "diglett",
+            "sprites": null
+        }
+    ]
+}
+```
+
+
 ### Help
 Console locked (process still running)
 Find and kill the running process.

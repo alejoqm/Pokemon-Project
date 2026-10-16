@@ -48,6 +48,12 @@ type PokemonTypeInfo struct {
             Name string `json:"name"`
         } `json:"double_damage_from"`
     } `json:"damage_relations"`
+    Pokemon []struct {
+        Pokemon struct {
+            URL string `json:"url"`
+            Name string `json:"name"`       
+        } `json:"pokemon"`
+    } `json:"pokemon"`
 }
 
 
@@ -114,9 +120,9 @@ func (c *ServiceClient) GetTypeInfo(ctx context.Context, pokemonType string) (Po
 	if resp.StatusCode != http.StatusOK {
 		return pokemonTypeInfo, fmt.Errorf("failed with status: %d", resp.StatusCode)
 	}
+    
     body, err := io.ReadAll(resp.Body)
 
-	
 	if err := json.Unmarshal(body, &pokemonTypeInfo); err != nil {
         return pokemonTypeInfo, err
     }

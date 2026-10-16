@@ -141,6 +141,178 @@ func (x *GetPokemonResponse) GetDamageRelations() *DamageRelations {
 	return nil
 }
 
+type GetPokemonsByTypeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`      // e.g., "electric", "ground"
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`   // max Pokémon to return
+	Random        bool                   `protobuf:"varint,3,opt,name=random,proto3" json:"random,omitempty"` // true = random sample, false = ordered by ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPokemonsByTypeRequest) Reset() {
+	*x = GetPokemonsByTypeRequest{}
+	mi := &file_pokemon_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPokemonsByTypeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPokemonsByTypeRequest) ProtoMessage() {}
+
+func (x *GetPokemonsByTypeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pokemon_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPokemonsByTypeRequest.ProtoReflect.Descriptor instead.
+func (*GetPokemonsByTypeRequest) Descriptor() ([]byte, []int) {
+	return file_pokemon_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetPokemonsByTypeRequest) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *GetPokemonsByTypeRequest) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *GetPokemonsByTypeRequest) GetRandom() bool {
+	if x != nil {
+		return x.Random
+	}
+	return false
+}
+
+type PokemonSummary struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"` // unique identifier
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Sprites       *Sprites               `protobuf:"bytes,3,opt,name=sprites,proto3" json:"sprites,omitempty"`
+	Types         []string               `protobuf:"bytes,4,rep,name=types,proto3" json:"types,omitempty"` // in case of dual-types
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PokemonSummary) Reset() {
+	*x = PokemonSummary{}
+	mi := &file_pokemon_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PokemonSummary) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PokemonSummary) ProtoMessage() {}
+
+func (x *PokemonSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_pokemon_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PokemonSummary.ProtoReflect.Descriptor instead.
+func (*PokemonSummary) Descriptor() ([]byte, []int) {
+	return file_pokemon_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PokemonSummary) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *PokemonSummary) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PokemonSummary) GetSprites() *Sprites {
+	if x != nil {
+		return x.Sprites
+	}
+	return nil
+}
+
+func (x *PokemonSummary) GetTypes() []string {
+	if x != nil {
+		return x.Types
+	}
+	return nil
+}
+
+type GetPokemonsByTypeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Pokemons      []*PokemonSummary      `protobuf:"bytes,1,rep,name=pokemons,proto3" json:"pokemons,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPokemonsByTypeResponse) Reset() {
+	*x = GetPokemonsByTypeResponse{}
+	mi := &file_pokemon_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPokemonsByTypeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPokemonsByTypeResponse) ProtoMessage() {}
+
+func (x *GetPokemonsByTypeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pokemon_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPokemonsByTypeResponse.ProtoReflect.Descriptor instead.
+func (*GetPokemonsByTypeResponse) Descriptor() ([]byte, []int) {
+	return file_pokemon_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetPokemonsByTypeResponse) GetPokemons() []*PokemonSummary {
+	if x != nil {
+		return x.Pokemons
+	}
+	return nil
+}
+
 type Sprites struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FrontDefault  string                 `protobuf:"bytes,1,opt,name=frontDefault,proto3" json:"frontDefault,omitempty"`
@@ -151,7 +323,7 @@ type Sprites struct {
 
 func (x *Sprites) Reset() {
 	*x = Sprites{}
-	mi := &file_pokemon_proto_msgTypes[2]
+	mi := &file_pokemon_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -163,7 +335,7 @@ func (x *Sprites) String() string {
 func (*Sprites) ProtoMessage() {}
 
 func (x *Sprites) ProtoReflect() protoreflect.Message {
-	mi := &file_pokemon_proto_msgTypes[2]
+	mi := &file_pokemon_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -176,7 +348,7 @@ func (x *Sprites) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Sprites.ProtoReflect.Descriptor instead.
 func (*Sprites) Descriptor() ([]byte, []int) {
-	return file_pokemon_proto_rawDescGZIP(), []int{2}
+	return file_pokemon_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Sprites) GetFrontDefault() string {
@@ -207,7 +379,7 @@ type DamageRelations struct {
 
 func (x *DamageRelations) Reset() {
 	*x = DamageRelations{}
-	mi := &file_pokemon_proto_msgTypes[3]
+	mi := &file_pokemon_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -219,7 +391,7 @@ func (x *DamageRelations) String() string {
 func (*DamageRelations) ProtoMessage() {}
 
 func (x *DamageRelations) ProtoReflect() protoreflect.Message {
-	mi := &file_pokemon_proto_msgTypes[3]
+	mi := &file_pokemon_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -232,7 +404,7 @@ func (x *DamageRelations) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DamageRelations.ProtoReflect.Descriptor instead.
 func (*DamageRelations) Descriptor() ([]byte, []int) {
-	return file_pokemon_proto_rawDescGZIP(), []int{3}
+	return file_pokemon_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *DamageRelations) GetNoDamageTo() []string {
@@ -289,7 +461,18 @@ const file_pokemon_proto_rawDesc = "" +
 	"\x02id\x18\x02 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05types\x18\x03 \x03(\tR\x05types\x12*\n" +
 	"\asprites\x18\x04 \x01(\v2\x10.pokemon.SpritesR\asprites\x12B\n" +
-	"\x0fdamageRelations\x18\x05 \x01(\v2\x18.pokemon.DamageRelationsR\x0fdamageRelations\"O\n" +
+	"\x0fdamageRelations\x18\x05 \x01(\v2\x18.pokemon.DamageRelationsR\x0fdamageRelations\"\\\n" +
+	"\x18GetPokemonsByTypeRequest\x12\x12\n" +
+	"\x04type\x18\x01 \x01(\tR\x04type\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x16\n" +
+	"\x06random\x18\x03 \x01(\bR\x06random\"v\n" +
+	"\x0ePokemonSummary\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12*\n" +
+	"\asprites\x18\x03 \x01(\v2\x10.pokemon.SpritesR\asprites\x12\x14\n" +
+	"\x05types\x18\x04 \x03(\tR\x05types\"P\n" +
+	"\x19GetPokemonsByTypeResponse\x123\n" +
+	"\bpokemons\x18\x01 \x03(\v2\x17.pokemon.PokemonSummaryR\bpokemons\"O\n" +
 	"\aSprites\x12\"\n" +
 	"\ffrontDefault\x18\x01 \x01(\tR\ffrontDefault\x12 \n" +
 	"\vbackDefault\x18\x02 \x01(\tR\vbackDefault\"\xf5\x01\n" +
@@ -301,10 +484,11 @@ const file_pokemon_proto_rawDesc = "" +
 	"\x0edoubleDamageTo\x18\x03 \x03(\tR\x0edoubleDamageTo\x12\"\n" +
 	"\fnoDamageFrom\x18\x04 \x03(\tR\fnoDamageFrom\x12&\n" +
 	"\x0ehalfDamageFrom\x18\x05 \x03(\tR\x0ehalfDamageFrom\x12*\n" +
-	"\x10doubleDamageFrom\x18\x06 \x03(\tR\x10doubleDamageFrom2W\n" +
+	"\x10doubleDamageFrom\x18\x06 \x03(\tR\x10doubleDamageFrom2\xb3\x01\n" +
 	"\x0ePokemonService\x12E\n" +
 	"\n" +
-	"GetPokemon\x12\x1a.pokemon.GetPokemonRequest\x1a\x1b.pokemon.GetPokemonResponseB5Z3github.com/yourusername/strava-project/internal/rpcb\x06proto3"
+	"GetPokemon\x12\x1a.pokemon.GetPokemonRequest\x1a\x1b.pokemon.GetPokemonResponse\x12Z\n" +
+	"\x11GetPokemonsByType\x12!.pokemon.GetPokemonsByTypeRequest\x1a\".pokemon.GetPokemonsByTypeResponseB5Z3github.com/yourusername/strava-project/internal/rpcb\x06proto3"
 
 var (
 	file_pokemon_proto_rawDescOnce sync.Once
@@ -318,23 +502,30 @@ func file_pokemon_proto_rawDescGZIP() []byte {
 	return file_pokemon_proto_rawDescData
 }
 
-var file_pokemon_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_pokemon_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_pokemon_proto_goTypes = []any{
-	(*GetPokemonRequest)(nil),  // 0: pokemon.GetPokemonRequest
-	(*GetPokemonResponse)(nil), // 1: pokemon.GetPokemonResponse
-	(*Sprites)(nil),            // 2: pokemon.Sprites
-	(*DamageRelations)(nil),    // 3: pokemon.DamageRelations
+	(*GetPokemonRequest)(nil),         // 0: pokemon.GetPokemonRequest
+	(*GetPokemonResponse)(nil),        // 1: pokemon.GetPokemonResponse
+	(*GetPokemonsByTypeRequest)(nil),  // 2: pokemon.GetPokemonsByTypeRequest
+	(*PokemonSummary)(nil),            // 3: pokemon.PokemonSummary
+	(*GetPokemonsByTypeResponse)(nil), // 4: pokemon.GetPokemonsByTypeResponse
+	(*Sprites)(nil),                   // 5: pokemon.Sprites
+	(*DamageRelations)(nil),           // 6: pokemon.DamageRelations
 }
 var file_pokemon_proto_depIdxs = []int32{
-	2, // 0: pokemon.GetPokemonResponse.sprites:type_name -> pokemon.Sprites
-	3, // 1: pokemon.GetPokemonResponse.damageRelations:type_name -> pokemon.DamageRelations
-	0, // 2: pokemon.PokemonService.GetPokemon:input_type -> pokemon.GetPokemonRequest
-	1, // 3: pokemon.PokemonService.GetPokemon:output_type -> pokemon.GetPokemonResponse
-	3, // [3:4] is the sub-list for method output_type
-	2, // [2:3] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	5, // 0: pokemon.GetPokemonResponse.sprites:type_name -> pokemon.Sprites
+	6, // 1: pokemon.GetPokemonResponse.damageRelations:type_name -> pokemon.DamageRelations
+	5, // 2: pokemon.PokemonSummary.sprites:type_name -> pokemon.Sprites
+	3, // 3: pokemon.GetPokemonsByTypeResponse.pokemons:type_name -> pokemon.PokemonSummary
+	0, // 4: pokemon.PokemonService.GetPokemon:input_type -> pokemon.GetPokemonRequest
+	2, // 5: pokemon.PokemonService.GetPokemonsByType:input_type -> pokemon.GetPokemonsByTypeRequest
+	1, // 6: pokemon.PokemonService.GetPokemon:output_type -> pokemon.GetPokemonResponse
+	4, // 7: pokemon.PokemonService.GetPokemonsByType:output_type -> pokemon.GetPokemonsByTypeResponse
+	6, // [6:8] is the sub-list for method output_type
+	4, // [4:6] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_pokemon_proto_init() }
@@ -348,7 +539,7 @@ func file_pokemon_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pokemon_proto_rawDesc), len(file_pokemon_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
